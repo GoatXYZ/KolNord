@@ -69,7 +69,7 @@ const isColor = (v: string) => v.startsWith('#')
 
 export function TokensSection() {
   return (
-    <section id="tokens" className="space-y-6">
+    <section id="tokens" className="scroll-mt-20 space-y-6">
       <div>
         <h2 className="page-title text-2xl mb-1">Design Tokens</h2>
         <p className="text-[0.9375rem] text-[var(--color-muted)]">

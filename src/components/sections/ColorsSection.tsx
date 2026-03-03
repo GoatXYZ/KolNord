@@ -30,7 +30,7 @@ const surfaces = [
 
 export function ColorsSection() {
   return (
-    <section id="colors" className="space-y-6">
+    <section id="colors" className="scroll-mt-20 space-y-6">
       <div>
         <h2 className="page-title text-2xl mb-1">Color System</h2>
         <p className="text-[0.9375rem] text-[var(--color-muted)]">

@@ -22,7 +22,7 @@ const fontStyleMap: Record<string, React.CSSProperties> = {
 
 export function TypographySection() {
   return (
-    <section id="typography" className="space-y-6">
+    <section id="typography" className="scroll-mt-20 space-y-6">
       <div>
         <h2 className="page-title text-2xl mb-1">Typography</h2>
         <p className="text-[0.9375rem] text-[var(--color-muted)]">

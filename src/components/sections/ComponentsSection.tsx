@@ -42,7 +42,7 @@ export function ComponentsSection() {
   const [progress] = useState(68)
 
   return (
-    <section id="components" className="space-y-10">
+    <section id="components" className="scroll-mt-20 space-y-10">
       <div>
         <h2 className="page-title text-2xl mb-1">Components</h2>
         <p className="text-[0.9375rem] text-[var(--color-muted)]">

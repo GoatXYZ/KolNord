@@ -6,6 +6,13 @@ interface NavbarProps {
   onToggleDark: () => void
 }
 
+const navItems = [
+  { id: 'components', label: 'Components' },
+  { id: 'colors', label: 'Colors' },
+  { id: 'typography', label: 'Typography' },
+  { id: 'tokens', label: 'Tokens' },
+]
+
 export function Navbar({ dark, onToggleDark }: NavbarProps) {
   return (
     <header
@@ -28,13 +35,13 @@ export function Navbar({ dark, onToggleDark }: NavbarProps) {
 
         {/* Nav links */}
         <nav className="hidden md:flex items-center gap-0.5">
-          {['Colors', 'Typography', 'Components', 'Layout', 'Tokens'].map((item) => (
+          {navItems.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+              key={item.id}
+              href={`#${item.id}`}
               className="px-3 py-1.5 rounded-[var(--radius-md)] text-[0.8125rem] font-medium text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)] transition-all duration-150"
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </nav>

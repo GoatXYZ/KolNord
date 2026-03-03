@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/Navbar'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { ColorsSection }     from '@/components/sections/ColorsSection'
 import { TypographySection } from '@/components/sections/TypographySection'
 import { ComponentsSection } from '@/components/sections/ComponentsSection'
@@ -64,32 +63,12 @@ export default function App() {
           </div>
         </div>
 
-        {/* Tabbed content */}
-        <div className="mx-auto max-w-[1400px] px-4 sm:px-8 py-8">
-          <Tabs defaultValue="components">
-            <TabsList className="mb-8">
-              <TabsTrigger value="components">Components</TabsTrigger>
-              <TabsTrigger value="colors">Colors</TabsTrigger>
-              <TabsTrigger value="typography">Typography</TabsTrigger>
-              <TabsTrigger value="tokens">Tokens</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="components">
-              <ComponentsSection />
-            </TabsContent>
-
-            <TabsContent value="colors">
-              <ColorsSection />
-            </TabsContent>
-
-            <TabsContent value="typography">
-              <TypographySection />
-            </TabsContent>
-
-            <TabsContent value="tokens">
-              <TokensSection />
-            </TabsContent>
-          </Tabs>
+        {/* Main content sections */}
+        <div className="mx-auto max-w-[1400px] px-4 sm:px-8 py-8 space-y-14">
+          <ComponentsSection />
+          <ColorsSection />
+          <TypographySection />
+          <TokensSection />
         </div>
       </main>
 
