@@ -32,7 +32,22 @@ pnpm dev
 
 # Production build
 pnpm build
+
+# Preview production build locally
+pnpm preview
 ```
+
+## GitHub Pages Deployment
+
+If the published site shows a blank page, GitHub is usually serving the repository source (`index.html` with `/src/main.tsx`) instead of the Vite build output.
+
+Configure the repo once in **Settings -> Pages**:
+
+1. Set **Source** to **GitHub Actions**
+2. Keep the included workflow at `.github/workflows/deploy.yml`
+3. Push to `main` and wait for the deploy workflow to finish
+
+For local verification, use `pnpm build && pnpm preview` (or open `dist/index.html` directly; relative asset paths are enabled).
 
 ## Project Structure
 

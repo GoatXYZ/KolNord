@@ -5,7 +5,9 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/KolNord/',
+  // Relative base keeps assets loading correctly both on GitHub Pages
+  // project paths and when opening dist/index.html locally.
+  base: './',
   plugins: [tailwindcss(), react()],
   resolve: {
     alias: {
