@@ -9,7 +9,13 @@ interface NavbarProps {
 const navItems = [
   { id: 'components', label: 'Components' },
   { id: 'colors', label: 'Colors' },
+  { id: 'shadows-spacing', label: 'Shadows' },
   { id: 'typography', label: 'Typography' },
+  { id: 'icons', label: 'Icons' },
+  { id: 'layout', label: 'Layout' },
+  { id: 'utilities', label: 'Utilities' },
+  { id: 'accessibility', label: 'A11y' },
+  { id: 'stack', label: 'Stack' },
   { id: 'tokens', label: 'Tokens' },
 ]
 
@@ -30,7 +36,7 @@ export function Navbar({ dark, onToggleDark }: NavbarProps) {
           style={{ fontFamily: 'var(--font-display)' }}
           className="text-base font-semibold tracking-[-0.02em] text-[var(--color-ink)] shrink-0"
         >
-          Kol<span style={{ color: 'var(--color-primary-500)' }}>Nord</span>
+          KOL<span style={{ color: 'var(--color-primary-500)' }}>NORD</span>
         </span>
 
         {/* Nav links */}

@@ -1,11 +1,20 @@
 import { useState, useEffect } from 'react'
+import { Copy, Check } from 'lucide-react'
 import { Navbar } from '@/components/Navbar'
 import { ColorsSection }     from '@/components/sections/ColorsSection'
 import { TypographySection } from '@/components/sections/TypographySection'
 import { ComponentsSection } from '@/components/sections/ComponentsSection'
 import { TokensSection }     from '@/components/sections/TokensSection'
+import { StackSection }      from '@/components/sections/StackSection'
+import { ShadowsSpacingSection } from '@/components/sections/ShadowsSpacingSection'
+import { LayoutSection }     from '@/components/sections/LayoutSection'
+import { UtilitiesSection }  from '@/components/sections/UtilitiesSection'
+import { AccessibilitySection } from '@/components/sections/AccessibilitySection'
+import { IconsSection }      from '@/components/sections/IconsSection'
 
 const STORAGE_KEY = 'kolnord-theme'
+
+const AGENT_PROMPT = 'Fetch https://raw.githubusercontent.com/GoatXYZ/KolNord/main/KolNord.md and use it as your design system'
 
 export default function App() {
   const [dark, setDark] = useState<boolean>(() => {
@@ -14,10 +23,18 @@ export default function App() {
     return window.matchMedia('(prefers-color-scheme: dark)').matches
   })
 
+  const [copied, setCopied] = useState(false)
+
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark)
     localStorage.setItem(STORAGE_KEY, dark ? 'dark' : 'light')
   }, [dark])
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(AGENT_PROMPT)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
@@ -37,28 +54,43 @@ export default function App() {
           className="border-b border-[var(--color-border)]"
           style={{ background: 'var(--color-surface)' }}
         >
-          <div className="mx-auto max-w-[1400px] px-4 sm:px-8 py-12">
+          <div className="mx-auto max-w-[1400px] px-4 sm:px-8 py-16 sm:py-20">
             <div className="max-w-2xl">
-              <p className="label-mono mb-3">Design System</p>
-              <h1 className="page-title mb-3">
-                Kol<span style={{ color: 'var(--color-primary-500)' }}>Nord</span>
+              <p className="label-mono mb-3">Agent-Ready Design System</p>
+              <h1 className="page-title mb-4" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.25rem)' }}>
+                One file. Every design decision.
               </h1>
               <p className="text-[0.9375rem] text-[var(--color-muted)] leading-[1.7] max-w-xl">
-                A Nordic-inspired, minimal design system built for precision and restraint.
-                Two modes: <strong className="text-[var(--color-ink)] font-medium">KolNord</strong> (light) and{' '}
-                <strong className="text-[var(--color-ink)] font-medium">KolNord Dark</strong>.
-                Shared structure, typography, spacing, and component patterns.
+                <strong className="text-[var(--color-ink)] font-medium">KOL<span style={{ color: 'var(--color-primary-500)' }}>NORD</span></strong>{' '}
+                is a complete design system in a single Markdown file. Copy the line below, give it to your AI agent, and ship consistent Nordic-minimal UI from the first prompt.
               </p>
-              <div className="flex flex-wrap gap-2 mt-6">
-                {['React 19', 'TypeScript', 'Tailwind CSS v4', 'Radix UI', 'lucide-react', 'cva'].map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center px-2.5 py-1 text-[0.75rem] font-medium rounded-[var(--radius-md)] border border-[var(--color-border)] text-[var(--color-muted)] bg-[var(--color-background)]"
+
+              {/* Copy box */}
+              <div className="mt-8 max-w-xl">
+                <div
+                  className="group relative flex items-center gap-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] px-4 py-3 cursor-pointer transition-all duration-150 hover:border-[var(--color-primary-500)]"
+                  style={{ background: 'var(--color-background)' }}
+                  onClick={handleCopy}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCopy() } }}
+                >
+                  <code className="flex-1 text-[0.8125rem] leading-[1.5] text-[var(--color-ink)] break-all" style={{ fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace' }}>
+                    {AGENT_PROMPT}
+                  </code>
+                  <button
+                    className="shrink-0 flex items-center justify-center w-8 h-8 rounded-[var(--radius-md)] text-[var(--color-muted)] transition-colors duration-150 hover:text-[var(--color-ink)] hover:bg-[var(--color-surface)]"
+                    aria-label="Copy to clipboard"
+                    tabIndex={-1}
                   >
-                    {tag}
-                  </span>
-                ))}
+                    {copied ? <Check size={16} className="text-[var(--color-success)]" /> : <Copy size={16} />}
+                  </button>
+                </div>
+                <p className="mt-2 text-[0.75rem] text-[var(--color-muted-light)]">
+                  {copied ? 'Copied to clipboard!' : 'Click to copy — paste directly into your agent'}
+                </p>
               </div>
+
             </div>
           </div>
         </div>
@@ -67,7 +99,13 @@ export default function App() {
         <div className="mx-auto max-w-[1400px] px-4 sm:px-8 py-8 space-y-14">
           <ComponentsSection />
           <ColorsSection />
+          <ShadowsSpacingSection />
           <TypographySection />
+          <IconsSection />
+          <LayoutSection />
+          <UtilitiesSection />
+          <AccessibilitySection />
+          <StackSection />
           <TokensSection />
         </div>
       </main>
@@ -77,7 +115,7 @@ export default function App() {
         <div className="mx-auto max-w-[1400px] px-4 sm:px-8 py-6 flex items-center justify-between gap-4 flex-wrap">
           <p className="text-[0.8125rem] text-[var(--color-muted)]">
             <span style={{ fontFamily: 'var(--font-display)' }} className="font-semibold text-[var(--color-ink)]">
-              Kol<span style={{ color: 'var(--color-primary-500)' }}>Nord</span>
+              KOL<span style={{ color: 'var(--color-primary-500)' }}>NORD</span>
             </span>
             {' '}Design System · Built with precision and restraint
           </p>
