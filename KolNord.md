@@ -2,7 +2,7 @@
 
 A Nordic-inspired, minimal design system built for precision and restraint. Two modes: **KolNord** (light) and **KolNord Dark**. Shared structure, typography, spacing, and component patterns — differentiated by color palette, shadow intensity, and surface treatment.
 
-> Origin: Selected as the production design from 10 design explorations (Breathe, Soft Industrial, Editorial, Nordic Clean, Dark Ops, Editorial Redesign, Industrial Redesign, Organic Minimal, Swiss Grid, and Dashboard Brutal). Codenames: **Nordic Clean** (light, `4.html`) and **Nordic Night** (dark, `4b.html`).
+> Origin: Selected as the production design from 10 design explorations (Breathe, Soft Industrial, Editorial, Nordic Clean, Dark Ops, Editorial Redesign, Industrial Redesign, Organic Minimal, Swiss Grid, and Dashboard Brutal). Codenames: **Nordic Clean** (light) and **Nordic Night** (dark). Now implemented as a React + Vite application.
 
 ---
 
@@ -40,10 +40,10 @@ https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0
 | Card title | Display | `1rem` (16px) | 600 | `1.3` | `-0.015em` |
 | Section heading | Display | `1.125rem` (18px) | 600 | — | `-0.015em` |
 | Page subtitle | Body | `0.9375rem` (15px) | 400 | `1.6` | — |
-| Nav link | Body | `0.8125rem` (13px) | 500 | — | `0.005em` |
-| Button (default) | Body | `0.8125rem` (13px) | 500 | — | `0.005em` |
-| Button (sm) | Body | `0.75rem` (12px) | 500 | — | `0.005em` |
-| Button (lg) | Body | `0.875rem` (14px) | 600 | — | `0.005em` |
+| Nav link | Body | `0.8125rem` (13px) | 500 | — | — |
+| Button (default) | Body | `0.8125rem` (13px) | 500 | — | — |
+| Button (sm) | Body | `0.75rem` (12px) | 500 | — | — |
+| Button (lg) | Body | `0.875rem` (14px) | 600 | — | — |
 | Badge | Body | `0.6875rem` (11px) | 600 | `1.6` | `0.02em` |
 | Label / form label | Body | `0.8125rem` (13px) | 500 | `1` | — |
 | Uppercase label | Body | `0.75rem` (12px) | 500 | `1` | `0.03em` |
@@ -83,8 +83,8 @@ h1, h2, h3, h4 {
 | `--primary-200` | `#a8d5eb` | — | Production-only (extended scale) |
 | `--primary-300` | `#6bb8dc` | — | Production-only |
 | `--primary-400` | `#339bcc` | — | Production-only |
-| `--primary-500` | `#0078b9` | — | Production alias for `--primary` |
-| `--primary-600` | `#006aa5` | — | Production alias for `--primary-hover` |
+| `--primary-500` | `#0078b9` | `#58a6ff` | Production alias for `--primary` |
+| `--primary-600` | `#006aa5` | `#79c0ff` | Production alias for `--primary-hover` |
 | `--primary-700` | `#004f7a` | — | Production-only |
 | `--primary-800` | `#003552` | — | Production-only |
 | `--primary-900` | `#001a29` | — | Production-only |
@@ -93,7 +93,7 @@ h1, h2, h3, h4 {
 | `--muted` | `#8993a4` | `#8b949e` | Tertiary text / labels |
 | `--muted-light` | `#a3adb8` | `#6e7681` | Placeholder text, disabled icons |
 | `--surface` | `#ffffff` | `#161b22` | Card / panel / nav background |
-| `--surface-soft` | `#f7f8fa` | — | Production: table header, soft fills |
+| `--surface-soft` | `#f7f8fa` | `#161b22` | Soft fills, secondary button hover bg |
 | `--background` | `#f7f8fa` | `#0d1117` | Page background |
 | `--border` | `#e2e6ed` | `#30363d` | Primary border |
 | `--border-light` | `#eef0f4` | `#21262d` | Dividers, inner separators |
@@ -118,7 +118,7 @@ The production Tailwind `@theme` provides a full 10-step primary scale (`primary
 | `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.04)` | `0 1px 3px rgba(0,0,0,0.3)` |
 | `--shadow-md` | `0 2px 8px rgba(0,0,0,0.06)` | `0 2px 8px rgba(0,0,0,0.4)` |
 | `--shadow-hover` | `0 2px 12px rgba(0,0,0,0.08)` | `0 2px 12px rgba(0,0,0,0.5)` |
-| `--shadow-lg` | `0 4px 16px rgba(0,0,0,0.08)` | — (use `--shadow-hover`) |
+| `--shadow-lg` | `0 4px 16px rgba(0,0,0,0.08)` | `0 4px 16px rgba(0,0,0,0.5)` |
 
 Dark mode uses 6–12x higher alpha values because dark surfaces need stronger shadows to register visually.
 
@@ -158,6 +158,8 @@ Badge radius is a fixed `10px` (pill shape), not part of the scale.
 
 These are the structural differences between light and dark that go beyond simple color token swaps.
 
+> **Dark mode mechanism**: The production site uses a `.dark` CSS class on the root element, toggled by JavaScript. The quick-start blocks in Section 14 offer a `prefers-color-scheme` media query as an alternative approach.
+
 ### Navigation Bar
 
 | Property | KolNord | KolNord Dark |
@@ -194,9 +196,9 @@ These are the structural differences between light and dark that go beyond simpl
 |---------|---------|--------------|
 | Form input bg | `var(--surface)` (white) | `var(--background)` (deepest dark) |
 | Filter/search input bg | `var(--surface)` | `var(--background)` |
-| Secondary button hover bg | `var(--background)` | `var(--border-light)` |
-| Ghost button hover bg | `var(--background)` | `var(--border-light)` |
-| Badge muted bg | `var(--background)` | `var(--border-light)` |
+| Secondary button hover bg | `var(--surface-soft)` | `var(--surface-soft)` |
+| Ghost button hover bg | `var(--surface-soft)` | `var(--surface-soft)` |
+| Badge muted bg | `var(--surface-soft)` | `var(--surface-soft)` |
 
 ### Select Chevron
 
@@ -225,7 +227,7 @@ html { color-scheme: dark; }
 
 ### 7.1 Button
 
-5 variants, 4 sizes. Uses `class-variance-authority` (`cva`) in production.
+6 variants, 4 sizes. Uses `class-variance-authority` (`cva`) in production.
 
 **Sizes**
 
@@ -234,102 +236,99 @@ html { color-scheme: dark; }
 | `sm` | `34px` | `14px` | `0.75rem` | 500 |
 | `default` | `40px` | `20px` | `0.8125rem` | 500 |
 | `lg` | `46px` | `28px` | `0.875rem` | 600 |
-| `icon` | `40px` × `40px` | — | — | — |
+| `icon` | `40px` x `40px` | — | — | — |
 
 **Variants**
 
 | Variant | Background | Text | Border | Hover |
 |---------|-----------|------|--------|-------|
-| `default` (primary) | `--primary` | white / `#0d1117`* | `--primary` | `--primary-hover`, `--shadow-md` |
-| `secondary` | `--surface` | `--ink` | `--border` | `--muted-light` border, `--surface-soft` / `--border-light`* bg |
-| `ghost` | transparent | `--muted` | transparent | `--ink` text, `--surface-soft` / `--border-light`* bg |
-| `outline` | transparent | `--primary-600` | `--primary` | `--primary-50` bg |
+| `default` (primary) | `--primary-500` | white / `#0d1117`* | `--primary-500` | `--primary-600` bg/border, `--shadow-md` |
+| `secondary` | `--surface` | `--ink` | `--border` | `--muted-light` border, `--surface-soft` bg |
+| `ghost` | transparent | `--muted` | transparent | `--ink` text, `--surface-soft` bg |
+| `outline` | transparent | `--primary-600` | `--primary-500` | `--primary-50` bg |
 | `destructive` | `--surface` | `--danger` | `--border` | `--danger-bg` bg, `--danger` border |
+| `success` | `--success` | white / `#0d1117`* | `--success` | `#15682f` / `#2ea043`* bg, `--shadow-md` |
 
 *Values after `/` are KolNord Dark overrides.
 
-**Semantic Buttons** (from prototypes)
-
-| Variant | Background | Text | Hover |
-|---------|-----------|------|-------|
-| `success` | `--success` | white / `#0d1117`* | `#15682f` / `#2ea043`* bg, `--shadow-md` |
-| `danger` | `--surface` | `--danger` | `--danger-bg` bg, `--danger` border |
-
-**Shared Properties** — All buttons: `border-radius: var(--radius-md)`, `transition: 150ms`, `gap: 6px`, disabled at `opacity: 0.45` + `cursor: not-allowed`. Pill CTA variant for nav uses `border-radius: 9999px`.
+**Shared Properties** — All buttons: `border-radius: var(--radius-md)`, `transition: 150ms`, `gap: 6px`, disabled at `opacity: 0.45` + `pointer-events: none`. Focus: `ring-2 ring-primary-300 ring-offset-2`. Pill CTA variant for nav uses `border-radius: 9999px`.
 
 **Production cva**
 
 ```ts
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-1.5 rounded-[var(--radius-md)] text-[0.8125rem] font-500 transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-45 whitespace-nowrap',
+  'inline-flex items-center justify-center gap-1.5 rounded-[var(--radius-md)] text-[0.8125rem] font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary-300)] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-45 whitespace-nowrap',
   {
     variants: {
       variant: {
         default:
-          'bg-primary-500 text-white border border-primary-500 hover:bg-primary-600 hover:border-primary-600 shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]',
+          'bg-[var(--color-primary-500)] text-white border border-[var(--color-primary-500)] hover:bg-[var(--color-primary-600)] hover:border-[var(--color-primary-600)] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]',
         secondary:
-          'bg-surface text-ink border border-[var(--color-border)] hover:border-[var(--color-muted-light)] hover:bg-[var(--color-surface-soft)]',
+          'bg-[var(--color-surface)] text-[var(--color-ink)] border border-[var(--color-border)] hover:border-[var(--color-muted-light)] hover:bg-[var(--color-surface-soft)]',
         ghost:
-          'bg-transparent text-muted border border-transparent hover:text-ink hover:bg-[var(--color-surface-soft)]',
+          'bg-transparent text-[var(--color-muted)] border border-transparent hover:text-[var(--color-ink)] hover:bg-[var(--color-surface-soft)]',
         outline:
-          'bg-transparent text-primary-600 border border-primary-500 hover:bg-primary-50',
+          'bg-transparent text-[var(--color-primary-600)] border border-[var(--color-primary-500)] hover:bg-[var(--color-primary-50)]',
         destructive:
-          'bg-surface text-danger border border-[var(--color-border)] hover:bg-[var(--color-danger-bg)] hover:border-danger',
+          'bg-[var(--color-surface)] text-[var(--color-danger)] border border-[var(--color-border)] hover:bg-[var(--color-danger-bg)] hover:border-[var(--color-danger)]',
+        success:
+          'bg-[var(--color-success)] text-white border border-[var(--color-success)] hover:bg-[#15682f] hover:shadow-[var(--shadow-md)] dark:text-[#0d1117] dark:hover:bg-[#2ea043]',
       },
       size: {
-        sm: 'h-[34px] px-3.5 text-xs',
+        sm:      'h-[34px] px-3.5 text-xs',
         default: 'h-10 px-5',
-        lg: 'h-[46px] px-7 text-sm font-600',
-        icon: 'h-10 w-10',
+        lg:      'h-[46px] px-7 text-sm font-semibold',
+        icon:    'h-10 w-10',
       },
     },
     defaultVariants: { variant: 'default', size: 'default' },
   },
-);
+)
 ```
 
 ### 7.2 Badge
 
-Pill-shaped status indicators. 4 variants.
+Pill-shaped status indicators. 5 variants.
 
 **Shared Properties** — `border-radius: 10px`, `padding: 2px 8px`, `font-size: 0.6875rem`, `font-weight: 600`, `letter-spacing: 0.02em`, `line-height: 1.6`.
 
 | Variant | Background | Text |
 |---------|-----------|------|
-| `secondary` / muted | `--surface-soft` / `--border-light`* | `--muted` |
-| `default` | `--primary-50` | `--primary` / `--primary-600` |
+| `secondary` / muted | `--surface-soft` | `--muted` |
+| `default` | `--primary-50` | `--primary-600` |
 | `success` | `--success-bg` | `--success` |
 | `destructive` / danger | `--danger-bg` | `--danger` |
-| `warning` (prototype) | `--warning-bg` | `--warning` |
+| `warning` | `--warning-bg` | `--warning` |
 
 **Production cva**
 
 ```ts
 const badgeVariants = cva(
-  'inline-flex items-center px-2 py-0.5 text-[0.6875rem] font-600 rounded-[10px] tracking-[0.02em] whitespace-nowrap leading-relaxed',
+  'inline-flex items-center px-2 py-0.5 text-[0.6875rem] font-semibold rounded-[10px] tracking-[0.02em] whitespace-nowrap leading-relaxed',
   {
     variants: {
       variant: {
-        secondary: 'bg-[var(--color-surface-soft)] text-muted',
-        default: 'bg-primary-50 text-primary-600',
-        success: 'bg-[var(--color-success-bg)] text-success',
-        destructive: 'bg-[var(--color-danger-bg)] text-danger',
+        secondary:   'bg-[var(--color-surface-soft)] text-[var(--color-muted)]',
+        default:     'bg-[var(--color-primary-50)] text-[var(--color-primary-600)]',
+        success:     'bg-[var(--color-success-bg)] text-[var(--color-success)]',
+        destructive: 'bg-[var(--color-danger-bg)] text-[var(--color-danger)]',
+        warning:     'bg-[var(--color-warning-bg)] text-[var(--color-warning)]',
       },
     },
     defaultVariants: { variant: 'secondary' },
   },
-);
+)
 ```
 
 ### 7.3 Card
 
-Compound component with 6 subcomponents.
+Compound component with 6 subcomponents. Uses `nordic-panel` utility for hover behavior.
 
 | Subcomponent | Styles |
 |-------------|--------|
-| `Card` | `bg-surface`, `border 1px --border`, `rounded-[--radius-md]`, hover `--shadow-sm` (light) or primary glow (dark) |
+| `Card` | `nordic-panel`, `bg-surface`, `border 1px --border`, `rounded-[--radius-md]`, `transition-shadow duration-150`, hover `--shadow-sm` (light) or primary glow (dark) |
 | `CardHeader` | `padding: 24px 24px 0` (`px-6 pt-6 pb-0`) |
-| `CardTitle` | `font-display`, `1rem`, `font-600`, `text-ink`, `tracking: -0.015em`, `leading: 1.3` |
+| `CardTitle` | `font-display`, `1rem`, `font-semibold`, `text-ink`, `tracking: -0.015em`, `leading: 1.3` |
 | `CardDescription` | `mt-1`, `0.8125rem`, `text-muted`, `leading: 1.6` |
 | `CardContent` | `padding: 20px 24px` (`px-6 py-5`) |
 | `CardFooter` | `border-t --border`, `padding: 16px 24px` (`px-6 py-4`) |
@@ -339,18 +338,19 @@ Compound component with 6 subcomponents.
 A specialized card with a left accent stripe and large display number.
 
 ```
-┌─────────────────────────┐
-│▌ STAT LABEL             │   ← 0.75rem, uppercase, --muted
-│▌ 42                     │   ← 2.75rem, font-display, --ink
-│▌ Detail text here       │   ← 0.8125rem, --muted
-└─────────────────────────┘
- ▲ 3px accent stripe
++-------------------------+
+|> STAT LABEL             |   <- 0.75rem, uppercase, --muted
+|> 42                     |   <- 2.75rem, font-display, --ink
+|> Detail text here       |   <- 0.8125rem, --muted
++-------------------------+
+ ^ 3px accent stripe
 ```
 
-- **Padding**: `24px 24px 24px 27px` (extra left for stripe).
+- **Padding**: `24px` default (`p-6 pl-[27px]`), `20px` dense (`p-5 pl-6`).
 - **Accent stripe**: `position: absolute`, `left: 0`, `width: 3px`, `border-radius: 0 2px 2px 0`.
-- **Accent colors**: `--primary`, `--success`, `--warning`, `--danger`.
+- **Accent colors**: `--primary-500`, `--success`, `--warning`, `--danger`.
 - **Hover**: `--shadow-hover`, `translateY(-1px)`.
+- **Dense mode**: `dense` prop reduces padding and stat value font size to `2.25rem`.
 
 ### 7.5 Input
 
@@ -379,7 +379,7 @@ box-shadow: 0 0 0 3px rgba(248,81,73,0.15);      /* dark */
 
 ### 7.6 Select
 
-Same dimensions and focus pattern as Input, plus:
+CSS styling pattern for native `<select>` elements. Same dimensions and focus pattern as Input, plus:
 
 ```css
 appearance: none;
@@ -392,6 +392,8 @@ background-position: right 12px center;
 background-size: 16px;
 ```
 
+> **Note**: The `@radix-ui/react-select` dependency is available for building an accessible Select component, but no React component has been scaffolded yet.
+
 ### 7.7 Textarea
 
 Same border/focus pattern as Input, plus:
@@ -403,53 +405,111 @@ line-height: 1.6;
 resize: vertical;
 ```
 
-### 7.8 Table
+### 7.8 Dialog
 
-Compound component with 6 subcomponents.
+Modal overlay built on `@radix-ui/react-dialog`. Compound component with 10 exports.
 
 | Subcomponent | Styles |
 |-------------|--------|
-| `Table` | `width: 100%`, `font-size: 0.875rem`, wrapped in `overflow-x-auto` |
-| `TableHeader` | `border-bottom --border`, `bg --surface-soft` |
-| `TableHead` | `h-10`, `px-4`, `text-xs`, `font-500`, `uppercase`, `tracking-wide`, `text-muted` |
-| `TableBody` | Last row no border, row hover `bg-primary-50` |
-| `TableRow` | `border-bottom --border-light`, `transition: 100ms` |
-| `TableCell` | `px-4 py-3`, `align-middle` |
+| `Dialog` | Root primitive (no styles) |
+| `DialogTrigger` | Trigger primitive (no styles) |
+| `DialogOverlay` | `fixed inset-0 z-50`, `bg-black/40`, animate-in/out fade |
+| `DialogContent` | `fixed` centered, `max-w-[448px]`, `bg-surface`, `border --border`, `rounded --radius-lg`, `p-6`, `shadow --shadow-lg`, animate-in/out fade + zoom (95%) |
+| `DialogClose` | `absolute right-4 top-4`, X icon (`h-4 w-4`), `opacity-70 hover:opacity-100`, `focus:ring-2 ring-primary-300` |
+| `DialogHeader` | `flex flex-col gap-1.5` |
+| `DialogFooter` | `mt-6 flex justify-end gap-2` |
+| `DialogTitle` | `font-display`, `text-lg`, `font-semibold`, `text-ink` |
+| `DialogDescription` | `mt-2`, `text-sm`, `text-muted`, `leading-[1.6]` |
+| `DialogPortal` | Portal primitive (no styles) |
 
-### 7.9 Dialog
+**Behavior**: Radix handles focus trapping, Escape to close, and focus return automatically. Overlay and content use `data-[state=open/closed]` for entrance/exit animations.
 
-Modal overlay with manual focus trap.
-
-| Element | Style |
-|---------|-------|
-| **Overlay** | `position: fixed`, `inset: 0`, `bg: black/40`, `z-index: 50` |
-| **Panel** | `max-width: 448px`, `border --border`, `rounded --radius-lg`, `bg-surface`, `padding: 24px`, `shadow --shadow-lg` |
-| **Title** | `font-display`, `1.125rem` (`text-lg`), `font-600`, `text-ink` |
-| **Description** | `mt-2`, `text-sm`, `text-muted`, `leading: 1.6` |
-| **Actions** | `mt-6`, `flex justify-end gap-2` |
-
-**Behavior**: Escape to close. Tab traps focus within panel. Returns focus to trigger on close.
-
-### 7.10 Label
+### 7.9 Label
 
 ```css
 font-size: 0.8125rem;
 font-weight: 500;
 color: var(--ink);
 line-height: 1;
+/* Peer disabled state */
+peer-disabled: cursor-not-allowed, opacity-70;
 ```
 
 Implemented with `@radix-ui/react-label` in production.
 
-### 7.11 Dropdown Menu
+### 7.10 Dropdown Menu
 
-Uses native `<details>/<summary>` pattern — no JS framework dependency.
+Built on `@radix-ui/react-dropdown-menu`. Compound component with 15 exports.
+
+| Subcomponent | Styles |
+|-------------|--------|
+| `DropdownMenu` | Root primitive |
+| `DropdownMenuTrigger` | Trigger primitive (user-styled) |
+| `DropdownMenuContent` | `z-50 min-w-44`, `rounded --radius-md`, `border --border`, `bg-surface`, `p-1`, `shadow --shadow-md`, animate-in/out fade + zoom (95%), `sideOffset: 4` |
+| `DropdownMenuItem` | `px-3 py-1.5`, `text-[0.8125rem]`, `rounded --radius-sm`, `text-ink`, `focus:bg-primary-50 focus:text-primary-600`, disabled at `opacity-50` |
+| `DropdownMenuCheckboxItem` | Same as Item with `pl-8` for indicator. Check icon via `ItemIndicator` |
+| `DropdownMenuRadioItem` | Same as CheckboxItem. Circle icon via `ItemIndicator` |
+| `DropdownMenuLabel` | `px-3 py-1.5`, `text-xs`, `font-semibold`, `uppercase`, `tracking-wide`, `text-muted` |
+| `DropdownMenuSeparator` | `h-px`, `bg-border-light`, `-mx-1 my-1` |
+| `DropdownMenuShortcut` | `ml-auto`, `text-xs`, `tracking-widest`, `text-muted-light` |
+| `DropdownMenuSubTrigger` | Same as Item, ChevronRight icon (`h-3.5 w-3.5`) |
+| `DropdownMenuSubContent` | Same as Content |
+| `DropdownMenuGroup` | Group primitive |
+| `DropdownMenuPortal` | Portal primitive |
+| `DropdownMenuSub` | Sub-menu primitive |
+| `DropdownMenuRadioGroup` | Radio group primitive |
+
+**Behavior**: Radix handles keyboard navigation, focus management, sub-menu positioning, and portal rendering.
+
+### 7.11 Switch
+
+Toggle switch built on `@radix-ui/react-switch`.
 
 | Element | Style |
 |---------|-------|
-| **Trigger** (`<summary>`) | `border --border`, `rounded --radius-md`, `bg-white`, `px-4 py-2`, `0.8125rem`, `font-500`, `:hover border --muted-light bg --surface-soft` |
-| **Panel** | `position: absolute`, `right: 0`, `z-20`, `mt-1`, `min-width: 176px`, `border --border`, `rounded --radius-md`, `bg-white`, `padding: 4px`, `shadow --shadow-md` |
-| **Item** | `px-3 py-1.5`, `0.8125rem`, `rounded --radius-sm`, `:hover bg-primary-50 text-primary-600` |
+| **Root** | `h-5 w-9`, `rounded-full`, `border-2 border-transparent`, `transition 150ms`, unchecked `bg-border`, checked `bg-primary-500`, `focus-visible:ring-2 ring-primary-300 ring-offset-2`, disabled `opacity-50` |
+| **Thumb** | `h-4 w-4`, `rounded-full`, `bg-white`, `shadow-sm`, unchecked `translate-x-0`, checked `translate-x-4`, `transition 150ms` |
+
+### 7.12 Progress
+
+Linear progress bar built on `@radix-ui/react-progress`.
+
+| Element | Style |
+|---------|-------|
+| **Root** | `h-1.5 w-full`, `rounded-full`, `bg-border-light`, `overflow-hidden` |
+| **Indicator** | `h-full`, `bg-primary-500`, `transition-transform 300ms ease-out`, progress via `translateX(-${100 - value}%)` |
+
+### 7.13 Avatar
+
+Circular avatar with image and fallback. Built on `@radix-ui/react-avatar`.
+
+| Subcomponent | Style |
+|-------------|--------|
+| `Avatar` | `h-9 w-9`, `rounded-full`, `overflow-hidden`, `shrink-0` |
+| `AvatarImage` | `aspect-square`, `h-full w-full`, `object-cover` |
+| `AvatarFallback` | `rounded-full`, `bg-primary-50`, `text-primary-600`, `text-xs`, `font-semibold`, centered |
+
+### 7.14 Separator
+
+Accessible divider built on `@radix-ui/react-separator`.
+
+| Orientation | Style |
+|------------|-------|
+| `horizontal` (default) | `h-px w-full`, `bg-border-light` |
+| `vertical` | `h-full w-px`, `bg-border-light` |
+
+Default is `decorative={true}`.
+
+### 7.15 Tabs
+
+Tab navigation built on `@radix-ui/react-tabs`.
+
+| Subcomponent | Style |
+|-------------|--------|
+| `Tabs` | Root primitive |
+| `TabsList` | `inline-flex items-center gap-0.5`, `border-b border-border`, `w-full` |
+| `TabsTrigger` | `px-4 py-2.5`, `text-[0.8125rem]`, `font-medium`, `text-muted`, `border-b-2 border-transparent`, `-mb-px`, `transition 150ms`, hover `text-ink`, active `text-primary-500 border-primary-500`, `focus-visible:ring-2 ring-primary-300`, disabled `opacity-50` |
+| `TabsContent` | `pt-6`, `focus-visible:ring-2 ring-primary-300` |
 
 ---
 
@@ -458,18 +518,18 @@ Uses native `<details>/<summary>` pattern — no JS framework dependency.
 ### App Shell
 
 ```
-┌──────────────────────────────────────────┐
-│ NavBar (sticky, 56px, border-bottom)     │
-├──────────────────────────────────────────┤
-│  ┌────────────────────────────────────┐  │
-│  │ max-w-1400px, px-4 py-8 sm:px-8   │  │
-│  │                                    │  │
-│  │  Header (title + subtitle + acts)  │  │
-│  │  ────────────────────────────────  │  │
-│  │  Content                           │  │
-│  │                                    │  │
-│  └────────────────────────────────────┘  │
-└──────────────────────────────────────────┘
++------------------------------------------+
+| NavBar (sticky, 56px, border-bottom)     |
++------------------------------------------+
+|  +------------------------------------+  |
+|  | max-w-1400px, px-4 py-8 sm:px-8   |  |
+|  |                                    |  |
+|  |  Header (title + subtitle + acts)  |  |
+|  |  --------------------------------  |  |
+|  |  Content                           |  |
+|  |                                    |  |
+|  +------------------------------------+  |
++------------------------------------------+
 ```
 
 - Skip-to-content link: `sr-only`, becomes visible on focus, `bg-primary-500 text-white`.
@@ -478,13 +538,13 @@ Uses native `<details>/<summary>` pattern — no JS framework dependency.
 ### Main Grid (Operations Layout)
 
 ```
-┌─────────────────────────┬────────────┐
-│ Main Column (1fr)       │ Sidebar    │
-│                         │ (360px)    │
-│ Card                    │ Card       │
-│ Card                    │ Card       │
-│ Card                    │            │
-└─────────────────────────┴────────────┘
++-------------------------+------------+
+| Main Column (1fr)       | Sidebar    |
+|                         | (360px)    |
+| Card                    | Card       |
+| Card                    | Card       |
+| Card                    |            |
++-------------------------+------------+
 
 @media (max-width: 1080px): single column
 ```
@@ -492,10 +552,10 @@ Uses native `<details>/<summary>` pattern — no JS framework dependency.
 ### Page Header
 
 ```
-┌──────────────────────────────────────┐
-│ Title (page-title)         [Actions] │
-│ Subtitle (optional)                  │
-└──────────────────────────────────────┘
++--------------------------------------+
+| Title (page-title)         [Actions] |
+| Subtitle (optional)                  |
++--------------------------------------+
 
 margin-bottom: 24px (mb-6)
 padding-bottom: 16px (pb-4)
@@ -508,11 +568,21 @@ padding-bottom: 16px (pb-4)
 ### Structure
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│ Kapture Service    Dashboard  Quotes  Operations▾  Config▾    [+ New Quote] │
-└─────────────────────────────────────────────────────────┘
-  ↑ brand             ↑ nav links with dropdowns              ↑ CTA pill
++--------------------------------------------------------+
+| Brand           Section Links           [Toggle] [CTA] |
++--------------------------------------------------------+
 ```
+
+### Navbar
+
+| Property | Style |
+|----------|-------|
+| Height | `h-14` (56px) |
+| Position | `sticky top-0 z-40` |
+| Border | `border-b border-border` |
+| Light bg | `var(--surface)` (solid) |
+| Dark bg | `rgba(22,27,34,0.85)` + `backdrop-filter: blur(12px)` (glassmorphism) |
+| Max width | `1400px`, `px-4 sm:px-8` |
 
 ### Brand Lockup
 
@@ -522,7 +592,7 @@ font-size: 1rem;
 font-weight: 600;
 letter-spacing: -0.02em;
 color: var(--ink);
-/* "Service" in --primary */
+/* Accent word in --primary-500 */
 ```
 
 ### Nav Link States
@@ -530,37 +600,17 @@ color: var(--ink);
 | State | Text | Background |
 |-------|------|-----------|
 | Default | `--muted` | transparent |
-| Hover | `--ink` | `--surface-soft` / `--background`* |
-| Active | `--primary` | `--primary-50` |
+| Hover | `--ink` | `--surface-soft` |
 
-### Desktop Dropdowns
-
-- Triggered by `mouseenter` on parent container.
-- Close after `180ms` delay on `mouseleave` (prevents flicker).
-- Panel: `min-w-48`, `border --border`, `rounded --radius-md`, `bg-surface`, `shadow --shadow-md`.
-- Items: same link states as nav links, `rounded --radius-sm`.
-- Appear via `opacity 0→1` transition (`100ms`).
+Links: `px-3 py-1.5`, `rounded --radius-md`, `text-[0.8125rem]`, `font-medium`, `transition 150ms`. Hidden below `md` breakpoint.
 
 ### CTA Button
 
-```css
-display: inline-flex;
-align-items: center;
-gap: 6px;
-padding: 6px 16px;
-border-radius: 9999px;           /* pill */
-background: var(--primary);
-color: white;                    /* light: white, dark: #0d1117 */
-font-size: 0.8125rem;
-font-weight: 600;
-/* Hover: --primary-hover bg, --shadow-md */
-```
+Pill-shaped primary button using the `Button` component with `rounded-full` override. Contains an icon (`h-3.5 w-3.5`, `strokeWidth: 2.5`) and label. Hidden below `sm` breakpoint.
 
-### Mobile Navigation
+### Theme Toggle
 
-- Breakpoint: `md` (768px). Below: hamburger `<details>` menu.
-- Trigger: `border --border`, `rounded --radius-md`, Menu icon + "Menu" text.
-- Panel: `w-56`, sections separated by `border-t --border-light`, section labels uppercase.
+Ghost icon button (`variant="ghost" size="icon"`) with Sun/Moon icons (`h-4 w-4`).
 
 ---
 
@@ -628,31 +678,6 @@ height: 1px;
 background: var(--border-light);
 ```
 
-### `ws-table`
-
-Clean table styling (alternative to component-based Table).
-
-```css
-font-size: 0.8125rem;
-border-collapse: collapse;
-width: 100%;
-
-th { bg: --surface-soft; border-bottom: --border; px: 0.75rem; py: 0.5rem; text: uppercase 0.75rem --muted; }
-td { px: 0.75rem; py: 0.5rem; border-bottom: --border-light; }
-tbody tr:hover { bg: --primary-50; }
-```
-
-### `stat-dense`
-
-Compact stat display with smaller numbers.
-
-```css
-padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-
-.stat-value { font-size: 2.25rem; font-display; font-600; line-height: 1.1; letter-spacing: -0.03em; margin-top: 0.375rem; }
-.stat-label { font-size: 0.75rem; font-500; uppercase; letter-spacing: 0.03em; color: --muted; }
-```
-
 ### `page-enter`
 
 Fade-up entrance animation.
@@ -701,14 +726,14 @@ Both animations respect `prefers-reduced-motion: reduce` (disabled with `animati
 - **Skip link**: `<a href="#main-content">Skip to main content</a>` — `sr-only`, visible on `:focus`, styled as primary-500 pill.
 - **Focus-visible ring**: `ring-2 ring-primary-300 ring-offset-2` (via Tailwind `focus-visible:` modifiers). On form controls: `box-shadow: 0 0 0 3px` with theme-appropriate primary alpha.
 - **Reduced motion**: Both `page-enter` and `loading-pulse` animations are disabled under `prefers-reduced-motion: reduce`.
-- **Dialog**: `role="dialog"`, `aria-modal="true"`, `aria-labelledby`, `aria-describedby`. Manual keyboard focus trap (Tab cycles within panel). Focus returns to trigger on close.
+- **Dialog**: Built on Radix UI — handles `role="dialog"`, `aria-modal`, focus trapping, and focus return automatically.
 - **Color contrast**: All text meets WCAG AA in both themes. Semantic colors chosen for sufficient contrast against their respective tinted backgrounds.
 
 ---
 
 ## 12. Icons
 
-**Library**: `lucide-react` (MIT, consistent 24×24 viewBox, `stroke-width: 2`).
+**Library**: `lucide-react` (MIT, consistent 24x24 viewBox, `stroke-width: 2`).
 
 | Context | Size | Stroke Width |
 |---------|------|-------------|
@@ -723,17 +748,40 @@ Both animations respect `prefers-reduced-motion: reduce` (disabled with `animati
 
 ## 13. Tooling Reference
 
+### Core
+
 | Tool | Role |
 |------|------|
-| **Tailwind CSS v4** | Utility-first CSS framework. Configured via `@theme {}` directive in `globals.css` (no `tailwind.config.js`). Uses `@tailwindcss/vite` plugin. |
-| **shadcn/ui** | Component scaffolding. Style: `new-york`. Base color: `slate`. CSS variables: enabled. Not a dependency — components are copied into `src/components/ui/`. |
-| **class-variance-authority** (`cva`) | Variant management for Button, Badge, Label. Defines base classes + variant matrix + defaults. |
-| **`cn()` utility** | Merges Tailwind classes with conflict resolution. Implementation: `twMerge(clsx(...inputs))`. |
+| **React 19** | UI framework. Component model with concurrent features. |
+| **TypeScript** | Strict type-checking across components, tokens, and props. |
+| **Vite 7** | Dev server and production bundler with native ESM and HMR. Uses `@tailwindcss/vite` plugin. |
+| **Tailwind CSS v4** | Utility-first CSS. Configured via `@theme {}` in `globals.css` (no `tailwind.config.js`). |
+| **Radix UI** | Accessible, unstyled primitives for Dialog, Dropdown Menu, Switch, Tabs, Progress, Avatar, Separator, Select, Tooltip, Label, and Slot. |
+| **shadcn/ui** | Component scaffolding. Style: `new-york`. Base color: `slate`. CSS variables: enabled. Components copied into `src/components/ui/`. |
+
+### Utilities & Tooling
+
+| Tool | Role |
+|------|------|
+| **class-variance-authority** (`cva`) | Variant management for Button, Badge. Defines base + variant matrix + defaults. |
+| **tailwind-merge** | Resolves Tailwind class conflicts (e.g., `px-4` + `px-6` -> `px-6`). Used inside `cn()`. |
 | **clsx** | Conditional class string builder. Used inside `cn()`. |
-| **tailwind-merge** | Resolves Tailwind class conflicts (e.g., `px-4` + `px-6` → `px-6`). Used inside `cn()`. |
-| **@radix-ui/react-label** | Accessible label primitive. Used by the Label component. |
-| **@radix-ui/react-slot** | Polymorphic `asChild` support. Used by Button to render as different elements. |
-| **lucide-react** | Icon library. 1000+ icons, consistent 24×24 grid, tree-shakeable. |
+| **lucide-react** | Icon library. 1500+ icons, consistent 24x24 grid, tree-shakeable, MIT. |
+| **pnpm** | Fast, disk-efficient package manager. |
+| **ESLint** | Flat config with typescript-eslint, react-hooks, and react-refresh plugins. |
+
+### Ecosystem
+
+> These are recommended stack tools. Not all are direct dependencies of the design system.
+
+| Tool | Role |
+|------|------|
+| **React Router** | Client-side routing with nested layouts and URL-driven state. |
+| **cmdk** | Command palette for keyboard-driven search and navigation. |
+| **Express v5** | Backend HTTP server with async middleware. |
+| **SQLite** | Embedded database via better-sqlite3. |
+| **Electron** | Desktop application wrapper with OS-level APIs. |
+| **Vitest** | Vite-native unit test runner with instant HMR re-runs. |
 
 ### `cn()` Implementation
 
@@ -773,6 +821,8 @@ export function cn(...inputs: ClassValue[]) {
 ## 14. Quick-Start Token Block
 
 Drop this into a new project's CSS to bootstrap either theme:
+
+> **Token naming**: The quick-start blocks below use short names (`--primary`, `--ink`, `--surface`, etc.) for standalone/vanilla CSS usage. The production Tailwind `@theme` configuration in `globals.css` uses the `--color-` prefix (`--color-primary-500`, `--color-ink`, `--color-surface`, etc.) because Tailwind v4 requires this prefix for automatic utility class generation (e.g., `bg-primary-500`, `text-ink`). Both map to the same values.
 
 ### KolNord (Light)
 
@@ -860,6 +910,8 @@ Drop this into a new project's CSS to bootstrap either theme:
 
 ### Both Themes via `prefers-color-scheme`
 
+> **Note**: The production site uses class-based dark mode (`.dark` on root) toggled by JavaScript. This `prefers-color-scheme` approach is provided as an alternative for projects that prefer automatic OS-level theme switching.
+
 ```css
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -929,11 +981,6 @@ Drop this into a new project's CSS to bootstrap either theme:
 
 ---
 
-## 15. Reference Prototypes
+## 15. Origins
 
-| File | Theme | Codename | Description |
-|------|-------|----------|-------------|
-| `4.html` | KolNord (Light) | Nordic Clean | Full operations dashboard with stat cards, action lane, dispatch list, work order queue, crew utilization, bottleneck radar, button/badge/form showcases |
-| `4b.html` | KolNord Dark | Nordic Night | Identical layout and components, dark palette with glassmorphism nav and primary glow card hover |
-
-Both prototypes are self-contained single-file HTML documents with inline CSS — no external dependencies beyond Google Fonts. They serve as the visual source of truth for the design system.
+KolNord was originally prototyped as two self-contained HTML files (Nordic Clean for light, Nordic Night for dark). The design system is now implemented as a React + Vite application with the component library in `src/components/ui/`.
