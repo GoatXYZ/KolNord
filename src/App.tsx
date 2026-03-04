@@ -6,11 +6,17 @@ import { TypographySection } from '@/components/sections/TypographySection'
 import { ComponentsSection } from '@/components/sections/ComponentsSection'
 import { TokensSection }     from '@/components/sections/TokensSection'
 import { StackSection }      from '@/components/sections/StackSection'
+import { GettingStartedSection } from '@/components/sections/GettingStartedSection'
+import { RecipesSection } from '@/components/sections/RecipesSection'
 import { ShadowsSpacingSection } from '@/components/sections/ShadowsSpacingSection'
 import { LayoutSection }     from '@/components/sections/LayoutSection'
 import { UtilitiesSection }  from '@/components/sections/UtilitiesSection'
 import { AccessibilitySection } from '@/components/sections/AccessibilitySection'
 import { IconsSection }      from '@/components/sections/IconsSection'
+import { RoadmapSection } from '@/components/sections/RoadmapSection'
+import { FaqSection } from '@/components/sections/FaqSection'
+import { ContributingSection } from '@/components/sections/ContributingSection'
+import { ChangelogSection } from '@/components/sections/ChangelogSection'
 
 const STORAGE_KEY = 'kolnord-theme'
 
@@ -97,6 +103,8 @@ export default function App() {
 
         {/* Main content sections */}
         <div className="mx-auto max-w-[1400px] px-4 sm:px-8 py-8 space-y-14">
+          <GettingStartedSection />
+          <RecipesSection />
           <ComponentsSection />
           <ColorsSection />
           <ShadowsSpacingSection />
@@ -106,6 +114,10 @@ export default function App() {
           <UtilitiesSection />
           <AccessibilitySection />
           <StackSection />
+          <RoadmapSection />
+          <FaqSection />
+          <ContributingSection />
+          <ChangelogSection />
           <TokensSection />
         </div>
       </main>

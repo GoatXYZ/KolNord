@@ -7,6 +7,8 @@ interface NavbarProps {
 }
 
 const navItems = [
+  { id: 'getting-started', label: 'Start' },
+  { id: 'recipes', label: 'Recipes' },
   { id: 'components', label: 'Components' },
   { id: 'colors', label: 'Colors' },
   { id: 'shadows-spacing', label: 'Shadows' },
@@ -16,6 +18,10 @@ const navItems = [
   { id: 'utilities', label: 'Utilities' },
   { id: 'accessibility', label: 'A11y' },
   { id: 'stack', label: 'Stack' },
+  { id: 'roadmap', label: 'Roadmap' },
+  { id: 'faq', label: 'FAQ' },
+  { id: 'contributing', label: 'Contributing' },
+  { id: 'changelog', label: 'Changelog' },
   { id: 'tokens', label: 'Tokens' },
 ]
 
@@ -40,7 +46,7 @@ export function Navbar({ dark, onToggleDark }: NavbarProps) {
         </span>
 
         {/* Nav links */}
-        <nav className="hidden md:flex items-center gap-0.5">
+        <nav className="hidden md:flex flex-1 min-w-0 items-center gap-0.5 overflow-x-auto whitespace-nowrap">
           {navItems.map((item) => (
             <a
               key={item.id}

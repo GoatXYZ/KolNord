@@ -1,109 +1,162 @@
 import { Card, CardContent } from '@/components/ui/card'
 
-const core = [
+type StackItem = {
+  name: string
+  role: string
+  description: string
+}
+
+const core: StackItem[] = [
   {
     name: 'React 19',
     role: 'UI Framework',
-    description: 'Component model, concurrent features, and the latest React Server Components support.',
+    description: 'Component model with concurrent features.',
   },
   {
     name: 'TypeScript',
     role: 'Language',
-    description: 'Strict type-checking across components, tokens, and props for zero-ambiguity contracts.',
+    description: 'Strict type-checking across components, tokens, and props.',
   },
   {
     name: 'Vite 7',
     role: 'Build',
-    description: 'Lightning-fast dev server and production bundler with native ESM and HMR.',
+    description: 'Dev server + production bundler with native ESM and HMR.',
   },
   {
     name: 'Tailwind CSS v4',
     role: 'Styling',
-    description: 'Utility-first CSS with @theme token injection — no config file, zero-runtime.',
-  },
-  {
-    name: 'Radix UI',
-    role: 'Primitives',
-    description: 'Accessible, unstyled primitives for dialogs, dropdowns, tooltips, and more.',
-  },
-  {
-    name: 'shadcn/ui',
-    role: 'Components',
-    description: 'Copy-paste component scaffolding. New York style, slate base, CSS variables enabled.',
-  },
-]
-
-const utilities = [
-  {
-    name: 'cva',
-    role: 'Variants',
-    description: 'Class Variance Authority for type-safe component variant maps with Tailwind.',
-  },
-  {
-    name: 'tailwind-merge',
-    role: 'Class Resolution',
-    description: 'Resolves Tailwind class conflicts so overrides work predictably in cn().',
-  },
-  {
-    name: 'clsx',
-    role: 'Class Builder',
-    description: 'Conditional class string builder — the other half of the cn() utility.',
-  },
-  {
-    name: 'lucide-react',
-    role: 'Icons',
-    description: 'Consistent 24x24 stroke icons. MIT licensed, tree-shakeable, 1 500+ glyphs.',
+    description: 'Utility-first CSS via @theme token definitions in globals.css.',
   },
   {
     name: 'pnpm',
     role: 'Package Manager',
-    description: 'Fast, disk-efficient package manager with workspace support for monorepos.',
+    description: 'Workspace-aware dependency and script runner.',
   },
   {
-    name: 'ESLint',
-    role: 'Linting',
-    description: 'Flat config with typescript-eslint, react-hooks, and react-refresh plugins.',
+    name: 'Radix UI',
+    role: 'Primitives',
+    description: 'Accessible, unstyled primitives for interaction-heavy components.',
+  },
+  {
+    name: 'shadcn/ui',
+    role: 'Scaffolding',
+    description: 'Component scaffolding conventions with copied local UI components.',
   },
 ]
 
-const ecosystem = [
+const extra: StackItem[] = [
+  {
+    name: 'class-variance-authority (cva)',
+    role: 'Variants',
+    description: 'Variant matrix helper for component APIs.',
+  },
+  {
+    name: 'tailwind-merge',
+    role: 'Class Resolution',
+    description: 'Resolves conflicting Tailwind utilities.',
+  },
+  {
+    name: 'clsx',
+    role: 'Class Builder',
+    description: 'Conditional class composition helper.',
+  },
+  {
+    name: 'lucide-react',
+    role: 'Icons',
+    description: 'Consistent icon system with tree-shakeable imports.',
+  },
+  {
+    name: 'Turborepo',
+    role: 'Monorepo',
+    description: 'Task orchestration for dev/build/lint/typecheck.',
+  },
+  {
+    name: 'ESLint',
+    role: 'Static Analysis',
+    description: 'Code-quality checks for TypeScript and React patterns.',
+  },
+  {
+    name: 'Prettier or Biome',
+    role: 'Formatting',
+    description: 'Deterministic formatting and reduced review noise.',
+  },
+  {
+    name: 'lint-staged + Husky',
+    role: 'Git Hooks',
+    description: 'Pre-commit quality gates on staged files.',
+  },
   {
     name: 'React Router',
     role: 'Routing',
-    description: 'Declarative client-side routing with nested layouts, loaders, and URL-driven state.',
+    description: 'Nested client-side layouts and URL-driven state.',
   },
   {
     name: 'cmdk',
-    role: 'Command Menu',
-    description: 'Fast, composable command palette for keyboard-driven search and navigation.',
+    role: 'Command Palette',
+    description: 'Keyboard-first command and navigation UI.',
+  },
+  {
+    name: 'Vitest',
+    role: 'Unit Testing',
+    description: 'Fast Vite-native test runner for component and utility tests.',
+  },
+  {
+    name: '@testing-library/react + jsdom',
+    role: 'Component Testing',
+    description: 'User-centric behavioral tests in a DOM-like environment.',
+  },
+  {
+    name: 'Playwright',
+    role: 'E2E Testing',
+    description: 'Browser-level regression coverage for critical flows.',
+  },
+  {
+    name: 'axe-core / @axe-core/playwright',
+    role: 'A11y Testing',
+    description: 'Automated accessibility checks in component and E2E layers.',
+  },
+  {
+    name: 'Storybook',
+    role: 'Component Docs',
+    description: 'Isolated development and documentation surface for UI components.',
+  },
+  {
+    name: 'Chromatic or Loki',
+    role: 'Visual Regression',
+    description: 'Detects unintended UI drift between changes.',
   },
   {
     name: 'Express v5',
-    role: 'Backend',
-    description: 'Minimal HTTP server framework for REST APIs with async middleware support.',
+    role: 'API',
+    description: 'Reference backend service for product-flow dogfooding.',
   },
   {
-    name: 'SQLite',
+    name: 'Zod + OpenAPI or ts-rest',
+    role: 'Contracts',
+    description: 'Runtime validation and contract-safe API typing.',
+  },
+  {
+    name: 'Drizzle ORM + drizzle-kit',
+    role: 'Data Layer',
+    description: 'Type-safe schema access with migration tooling.',
+  },
+  {
+    name: 'SQLite (better-sqlite3)',
     role: 'Database',
-    description: 'Embedded relational database via better-sqlite3 — zero-server, single-file persistence.',
+    description: 'Zero-server local persistence for API and tooling workflows.',
   },
   {
     name: 'Electron',
     role: 'Desktop',
-    description: 'Wraps web apps into native desktop binaries with OS-level APIs and IPC.',
-  },
-  {
-    name: 'Vitest',
-    role: 'Testing',
-    description: 'Vite-native unit test runner with instant HMR re-runs and ESM-first architecture.',
+    description: 'Desktop packaging and OS-level capability bridge.',
   },
 ]
 
-function StackGrid({ items }: { items: typeof core }) {
+function StackGrid({ items }: { items: StackItem[] }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {items.map((item) => (
-        <Card key={item.name} className="group">
+        <Card key={item.name} className="group h-full">
           <CardContent className="pt-5 pb-5 space-y-2">
             <div className="flex items-center justify-between gap-3">
               <h3
@@ -116,9 +169,7 @@ function StackGrid({ items }: { items: typeof core }) {
                 {item.role}
               </span>
             </div>
-            <p className="text-[0.8125rem] leading-[1.6] text-[var(--color-muted)]">
-              {item.description}
-            </p>
+            <p className="text-[0.8125rem] leading-[1.6] text-[var(--color-muted)]">{item.description}</p>
           </CardContent>
         </Card>
       ))}
@@ -132,26 +183,21 @@ export function StackSection() {
       <div>
         <h2 className="page-title text-2xl mb-1">Stack</h2>
         <p className="text-[0.9375rem] text-[var(--color-muted)]">
-          The tooling behind KOLNORD — each dependency chosen for precision, not novelty.
+          Required foundation first, optional ecosystem second. Source: Tooling Reference in KolNord.md.
         </p>
       </div>
 
-      {/* Core */}
       <div className="space-y-3">
-        <p className="label-mono">Core</p>
+        <p className="label-mono">Core (Required)</p>
         <StackGrid items={core} />
       </div>
 
-      {/* Utilities & Tooling */}
       <div className="space-y-3">
-        <p className="label-mono">Utilities & Tooling</p>
-        <StackGrid items={utilities} />
-      </div>
-
-      {/* Ecosystem */}
-      <div className="space-y-3">
-        <p className="label-mono">Ecosystem</p>
-        <StackGrid items={ecosystem} />
+        <p className="label-mono">Extra (Optional)</p>
+        <p className="text-[0.75rem] text-[var(--color-muted-light)]">
+          Add these only when your product scope calls for them.
+        </p>
+        <StackGrid items={extra} />
       </div>
     </section>
   )

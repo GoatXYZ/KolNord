@@ -748,7 +748,7 @@ Both animations respect `prefers-reduced-motion: reduce` (disabled with `animati
 
 ## 13. Tooling Reference
 
-### Core
+### Core (Required)
 
 | Tool | Role |
 |------|------|
@@ -756,32 +756,38 @@ Both animations respect `prefers-reduced-motion: reduce` (disabled with `animati
 | **TypeScript** | Strict type-checking across components, tokens, and props. |
 | **Vite 7** | Dev server and production bundler with native ESM and HMR. Uses `@tailwindcss/vite` plugin. |
 | **Tailwind CSS v4** | Utility-first CSS. Configured via `@theme {}` in `globals.css` (no `tailwind.config.js`). |
+| **pnpm** | Fast, disk-efficient package manager and workspace runner. |
 | **Radix UI** | Accessible, unstyled primitives for Dialog, Dropdown Menu, Switch, Tabs, Progress, Avatar, Separator, Select, Tooltip, Label, and Slot. |
 | **shadcn/ui** | Component scaffolding. Style: `new-york`. Base color: `slate`. CSS variables: enabled. Components copied into `src/components/ui/`. |
 
-### Utilities & Tooling
+### Extra (Optional)
+
+> Add based on product scope. KolNord can ship without these.
 
 | Tool | Role |
 |------|------|
-| **class-variance-authority** (`cva`) | Variant management for Button, Badge. Defines base + variant matrix + defaults. |
-| **tailwind-merge** | Resolves Tailwind class conflicts (e.g., `px-4` + `px-6` -> `px-6`). Used inside `cn()`. |
-| **clsx** | Conditional class string builder. Used inside `cn()`. |
-| **lucide-react** | Icon library. 1500+ icons, consistent 24x24 grid, tree-shakeable, MIT. |
-| **pnpm** | Fast, disk-efficient package manager. |
-| **ESLint** | Flat config with typescript-eslint, react-hooks, and react-refresh plugins. |
-
-### Ecosystem
-
-> These are recommended stack tools. Not all are direct dependencies of the design system.
-
-| Tool | Role |
-|------|------|
+| **class-variance-authority** (`cva`) | Variant matrix helper for component APIs (Button, Badge, etc.). |
+| **tailwind-merge** | Resolves Tailwind utility collisions; typically paired with `clsx` in `cn()`. |
+| **clsx** | Conditional class string builder for ergonomic class composition. |
+| **lucide-react** | Icon set with a consistent visual language and tree-shakeable imports. |
+| **Turborepo** | Monorepo task orchestration for `dev`, `build`, `lint`, and `typecheck` across workspace packages. |
+| **ESLint** | Static analysis with TypeScript + React Hooks safety rules. |
+| **Prettier** or **Biome** | Deterministic formatting and lower review noise. |
+| **lint-staged** + **Husky** | Pre-commit quality gates for staged files only. |
 | **React Router** | Client-side routing with nested layouts and URL-driven state. |
 | **cmdk** | Command palette for keyboard-driven search and navigation. |
-| **Express v5** | Backend HTTP server with async middleware. |
-| **SQLite** | Embedded database via better-sqlite3. |
+| **Vitest** | Fast unit/integration testing with Vite-native config. |
+| **@testing-library/react** + **jsdom** | User-centric component behavior tests. |
+| **Playwright** | End-to-end testing for critical flows and regressions. |
+| **axe-core** / **@axe-core/playwright** | Automated accessibility checks in component and E2E runs. |
+| **Storybook** | Isolated component documentation and manual QA surface. |
+| **Chromatic** or **Loki** | Visual regression testing for UI drift detection. |
+| **Express v5** | Reference API service for dogfooding product flows against the design system. |
+| **Zod** + OpenAPI generation (or **ts-rest**) | Shared runtime validation and contract-safe frontend/backend typing. |
+| **Drizzle ORM** | Type-safe ORM layer for schema-first SQLite access. |
+| **drizzle-kit** | Migration and schema diff tooling for Drizzle projects. |
+| **SQLite** (`better-sqlite3`) | Embedded database for zero-server local persistence. |
 | **Electron** | Desktop application wrapper with OS-level APIs. |
-| **Vitest** | Vite-native unit test runner with instant HMR re-runs. |
 
 ### `cn()` Implementation
 

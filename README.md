@@ -14,6 +14,10 @@ Two modes: **KolNord** (light) and **KolNord Dark**. Shared structure, typograph
 | Radix UI primitives | latest |
 | lucide-react | latest |
 | class-variance-authority | latest |
+| Turborepo | 2 |
+| Express | 5 |
+| Drizzle ORM | latest |
+| better-sqlite3 | latest |
 | pnpm | 10 |
 | Node (via fnm) | 24 LTS |
 
@@ -30,11 +34,32 @@ pnpm install
 # Dev server
 pnpm dev
 
+# Run site + API together (Turbo)
+pnpm dev:all
+
+# API only
+pnpm dev:api
+
 # Production build
 pnpm build
 
+# Build all workspace packages
+pnpm build:all
+
 # Preview production build locally
 pnpm preview
+```
+
+## SQLite API Baseline
+
+`apps/api` provides a reusable REST baseline backed by SQLite (`better-sqlite3`) with `drizzle-orm`.
+
+```bash
+# Start API (default: http://localhost:4000)
+pnpm dev:api
+
+# Health check
+curl http://localhost:4000/health
 ```
 
 ## GitHub Pages Deployment
@@ -79,6 +104,18 @@ src/
 │   └── utils.ts
 └── styles/
     └── globals.css     ← KolNord tokens + Tailwind @theme
+
+apps/
+└── api/
+    └── src/
+        └── server.ts   ← Express API with SQLite baseline
+
+packages/
+└── data-sqlite/
+    └── src/
+        ├── client.ts
+        ├── projects.ts
+        └── schema.ts   ← shared SQLite + data access layer
 ```
 
 ## Design Principles
