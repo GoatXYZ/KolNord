@@ -1,137 +1,148 @@
-# KolNord Design System
+# 🏭 KolNord
 
-A Nordic-inspired, minimal design system built for precision and restraint.
-Two modes: **KolNord** (light) and **KolNord Dark**. Shared structure, typography, spacing, and component patterns — differentiated by color palette, shadow intensity, and surface treatment.
+**Nordic-inspired design system for Kolene applications and websites.**
 
-## Stack
+A living design documentation site with interactive component showcase, dual-theme support, and a shared component library used across Kolene internal tools.
 
-| Tool | Version |
-|------|---------|
-| React | 19 |
-| TypeScript | ~5.9 |
-| Vite | 7 |
-| Tailwind CSS | v4 |
-| Radix UI primitives | latest |
-| lucide-react | latest |
-| class-variance-authority | latest |
-| Turborepo | 2 |
-| Express | 5 |
-| Drizzle ORM | latest |
-| better-sqlite3 | latest |
-| pnpm | 10 |
-| Node (via fnm) | 24 LTS |
+🔗 **[Live Demo](https://goatxyz.github.io/KolNord/)**
 
-## Getting Started
+---
 
-```bash
-# Install Node via fnm
-fnm install 24
-fnm use 24
+## ✨ Features
 
-# Install dependencies
-pnpm install
+### 🎨 Design Language
 
-# Dev server
-pnpm dev
+- 🌗 **Dual theme** — KolNord Light and KolNord Dark
+- 🌈 **Color palette** — Restrained, semantic color system with explorer
+- 🔤 **Typography** — Space Grotesk (display) + Instrument Sans (body)
+- 📐 **Spacing & layout** — Consistent utility system
 
-# Run site + API together (Turbo)
-pnpm dev:all
+### 🧩 Component Library
 
-# API only
-pnpm dev:api
+15+ UI primitives built on Radix UI:
 
-# Production build
-pnpm build
+- Avatar, Badge, Button, Card, Dialog, Dropdown Menu
+- Input, Label, Progress, Separator, Switch
+- Tabs, Tooltip, and more
 
-# Build all workspace packages
-pnpm build:all
+### 📖 Documentation Sections
 
-# Preview production build locally
-pnpm preview
-```
+- 🚀 **Getting Started** — Installation and usage guide
+- 🎨 **Colors** — Interactive palette explorer
+- 🔤 **Typography** — Type scale showcase
+- 🧩 **Components** — Live component demos
+- 🎯 **Icons** — Icon library reference
+- 📐 **Layout** — Grid and spacing utilities
+- ♿ **Accessibility** — Guidelines and best practices
+- 🗺️ **Roadmap** — Planned features
+- 🍳 **Recipes** — Common UI patterns
 
-## SQLite API Baseline
+---
 
-`apps/api` provides a reusable REST baseline backed by SQLite (`better-sqlite3`) with `drizzle-orm`.
-
-```bash
-# Start API (default: http://localhost:4000)
-pnpm dev:api
-
-# Health check
-curl http://localhost:4000/health
-```
-
-## GitHub Pages Deployment
-
-If the published site shows a blank page, GitHub is usually serving the repository source (`index.html` with `/src/main.tsx`) instead of the Vite build output.
-
-Configure the repo once in **Settings -> Pages**:
-
-1. Set **Source** to **GitHub Actions**
-2. Keep the included workflow at `.github/workflows/deploy.yml`
-3. Push to `main` and wait for the deploy workflow to finish
-
-For local verification, use `pnpm build && pnpm preview` (or open `dist/index.html` directly; relative asset paths are enabled).
-
-## Project Structure
+## 🏗️ Architecture
 
 ```
 src/
 ├── components/
 │   ├── Navbar.tsx
-│   ├── sections/
+│   ├── sections/                # 12 documentation sections
 │   │   ├── ColorsSection.tsx
 │   │   ├── TypographySection.tsx
 │   │   ├── ComponentsSection.tsx
-│   │   └── TokensSection.tsx
-│   └── ui/
-│       ├── avatar.tsx
-│       ├── badge.tsx
+│   │   ├── IconsSection.tsx
+│   │   ├── LayoutSection.tsx
+│   │   ├── AccessibilitySection.tsx
+│   │   └── ...
+│   └── ui/                      # 15+ Radix-based primitives
 │       ├── button.tsx
 │       ├── card.tsx
 │       ├── dialog.tsx
-│       ├── dropdown-menu.tsx
-│       ├── input.tsx
-│       ├── label.tsx
-│       ├── progress.tsx
-│       ├── separator.tsx
-│       ├── stat-card.tsx
-│       ├── switch.tsx
-│       ├── tabs.tsx
-│       └── textarea.tsx
+│       └── ...
 ├── lib/
-│   └── utils.ts
+│   └── utils.ts                 # clsx + tailwind-merge helpers
 └── styles/
-    └── globals.css     ← KolNord tokens + Tailwind @theme
+    └── globals.css              # Design tokens + theme variables
 
 apps/
 └── api/
-    └── src/
-        └── server.ts   ← Express API with SQLite baseline
+    └── src/server.ts            # SQLite baseline API
 
 packages/
 └── data-sqlite/
     └── src/
         ├── client.ts
         ├── projects.ts
-        └── schema.ts   ← shared SQLite + data access layer
+        └── schema.ts
 ```
-
-## Design Principles
-
-- **Restrained color.** One blue primary. Semantic colors only where meaning demands it.
-- **Precision over decoration.** 4px radii, 1px borders, exact font sizes.
-- **Quiet surfaces.** White or near-black backgrounds. Cards distinguished by border, not shadow.
-- **Typography carries hierarchy.** Space Grotesk (display) + Instrument Sans (body).
-- **Consistent interactive feedback.** 150ms transitions, shared focus ring, shared hover escalation.
-
-## Themes
-
-Theme is persisted in `localStorage` and respects `prefers-color-scheme` on first visit.
-
-Toggle via the sun/moon button in the navbar.
 
 ---
 
-> Origin: Selected from 10 design explorations. Codenames: **Nordic Clean** (light) and **Nordic Night** (dark).
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** 24+
+- **pnpm** 10+
+
+### Install & Dev
+
+```bash
+pnpm install
+pnpm dev
+```
+
+### Build
+
+```bash
+pnpm build
+```
+
+Static output goes to `docs/` (configured for GitHub Pages).
+
+### Preview
+
+```bash
+pnpm preview
+```
+
+---
+
+## 📦 Tech Stack
+
+| Layer            | Technology                 |
+| ---------------- | -------------------------- |
+| ⚛️ Framework     | React 19                   |
+| 🔷 Language      | TypeScript ~5.9            |
+| ⚡ Build         | Vite 7                     |
+| 🎨 Styling       | Tailwind CSS v4            |
+| 🧩 Components    | Radix UI primitives        |
+| 🗄️ Database      | SQLite (better-sqlite3)    |
+| ⚙️ Backend       | Express 5 + Drizzle ORM   |
+| 🏗️ Monorepo     | Turborepo 2                |
+| 📦 Package Mgr   | pnpm 10                    |
+
+---
+
+## 🚢 Deployment
+
+GitHub Pages via GitHub Actions:
+
+```bash
+pnpm build
+# Output: docs/ → GitHub Pages
+# Base path: /KolNord/
+```
+
+Enable in repo Settings → Pages → GitHub Actions.
+
+---
+
+## 📄 License
+
+Proprietary — [Kolene Corporation](https://kolene.com). Internal use only.
+
+---
+
+<p align="center">
+  🏭 <a href="https://kolene.com">Kolene Corporation</a> — Internal Tool
+</p>
